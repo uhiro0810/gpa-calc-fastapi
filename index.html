@@ -1,0 +1,20 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>GPA計算（Pythonバックエンド版）</title>
+<input id="csv" type="file" accept=".csv">
+<button id="send">計算する</button>
+<div id="out"></div>
+<script>
+const $ = (id)=>document.getElementById(id);
+$("send").onclick = async () => {
+  const f = $("csv").files[0];
+  if(!f){ $("out").textContent = "CSVを選択してください。"; return; }
+  const fd = new FormData(); fd.append("file", f, f.name);
+  const res = await fetch("http://127.0.0.1:8000/api/calc", { method: "POST", body: fd });
+  if(!res.ok){ $("out").textContent = "エラー: " + res.status; return; }
+  const data = await res.json();
+  const gpa = data.gpa !== null ? data.gpa.toFixed(3) : "—";
+  const ratio = data.ratio !== null ? (data.ratio*100).toFixed(2)+"%" : "—";
+  $("out").innerHTML = `① 累計GPA: <b>${gpa}</b><br>② A以上(非P/F)割合: <b>${ratio}</b>`;
+};
+</script>
