@@ -110,18 +110,6 @@ CSV をアップロードして **① 累計 GPA** と **② P/F 評価ではな
 
 ---
 
-## トラブルシューティング
-- `python-multipart` が無いと言われる
-  → `pip install python-multipart`
-- CSV アップロードで 422
-  → Swagger の `file` フィールドに **必ずファイルを選択**。
-- `ModuleNotFoundError: app`
-  → `uvicorn app:app --reload` 実行時の **作業ディレクトリ** に `app.py` があるか確認。
-- 別 Python に入れてしまったかも？
-  → `python -c "import sys; print(sys.executable)"` で使われている Python を確認し、その Python に `pip install`。
-
----
-
 ## ライセンス
 MIT（必要に応じて変更してください）
 
